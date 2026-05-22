@@ -1,0 +1,277 @@
+/* ============================================================
+   Mr. Crab Design System — Tokens
+   Load this file once at the top of any page:
+   <link rel="stylesheet" href="colors_and_type.css">
+   ============================================================ */
+
+/* --- Fonts (Google CDN) ---------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+:root {
+  /* ---------- Color: canvas + ink ---------- */
+  --canvas:           #FBFBFD;            /* near-white page background */
+  --canvas-elevated:  #FFFFFF;            /* modals, dropdowns */
+  --ink:              #1D1D1F;            /* primary text */
+  --ink-2:            #424245;            /* secondary text */
+  --ink-3:            #6E6E73;            /* tertiary / metadata */
+  --ink-4:            #86868B;            /* placeholder */
+  --hairline:         rgba(0,0,0,0.08);   /* dividers */
+  --hairline-strong:  rgba(0,0,0,0.16);
+
+  /* ---------- Color: the only accent ---------- */
+  --accent:           #C8553D;            /* brick coral — crab shell / 印章 red */
+  --accent-hover:     #A8412F;
+  --accent-pressed:   #8E3526;
+  --accent-tint:      rgba(200,85,61,0.08); /* very subtle background wash */
+
+  /* ---------- Color: scrim / overlays ---------- */
+  --scrim:            rgba(0,0,0,0.40);
+  --protect-gradient: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%);
+
+  /* ---------- Type: families ---------- */
+  --font-sans:        'Inter', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-mono:        ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* ---------- Type: weights ---------- */
+  --w-extralight: 200;
+  --w-light:      300;
+  --w-regular:    400;
+  --w-medium:     500;
+  --w-semibold:   600;
+
+  /* ---------- Type: scale (rem-based, root = 16px) ---------- */
+  --fs-display-1: 5.5rem;   /* 88px — hero CN+EN stack */
+  --fs-display-2: 4rem;     /* 64px */
+  --fs-h1:        3rem;     /* 48px */
+  --fs-h2:        2.25rem;  /* 36px */
+  --fs-h3:        1.625rem; /* 26px */
+  --fs-h4:        1.25rem;  /* 20px */
+  --fs-body:      1.0625rem;/* 17px — Apple body */
+  --fs-body-sm:   0.9375rem;/* 15px */
+  --fs-caption:   0.8125rem;/* 13px */
+  --fs-micro:     0.6875rem;/* 11px — eyebrows */
+
+  /* ---------- Type: line-heights (CJK-safe) ---------- */
+  --lh-display:   1.15;
+  --lh-heading:   1.25;
+  --lh-body:      1.7;      /* CJK breathing room */
+  --lh-tight:     1.45;
+  --lh-ui:        1.5;
+
+  /* ---------- Type: tracking ---------- */
+  --tr-display:   -0.02em;  /* Apple-style optical at large sizes */
+  --tr-heading:   -0.01em;
+  --tr-body:      0;
+  --tr-ui:        0;
+  --tr-eyebrow:   0.08em;   /* uppercase micro labels */
+
+  /* ---------- Spacing (8px base) ---------- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* ---------- Radii ---------- */
+  --r-sm:    8px;     /* secondary/ghost buttons, inputs */
+  --r-md:    12px;    /* images inside cards */
+  --r-lg:    16px;    /* cards */
+  --r-xl:    20px;    /* modals */
+  --r-pill:  999px;   /* primary CTAs, avatars */
+
+  /* ---------- Shadows ---------- */
+  --shadow-card:        0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  --shadow-card-hover:  0 2px 4px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.10);
+  --shadow-nav:         0 1px 0 rgba(0,0,0,0.06);
+  --shadow-modal:       0 24px 64px rgba(0,0,0,0.20);
+
+  /* ---------- Motion ---------- */
+  --ease:           cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:       120ms;
+  --dur:            200ms;
+  --dur-slow:       400ms;
+  --dur-scroll:     600ms;
+
+  /* ---------- Layout ---------- */
+  --maxw:           1200px;
+  --nav-h:          64px;
+  --section-y:      96px;
+  --section-x:      48px;
+}
+
+/* ============================================================
+   Dark mode (Apple-style true black for OLED)
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas:          #000000;
+    --canvas-elevated: #1D1D1F;
+    --ink:             #F5F5F7;
+    --ink-2:           #C7C7CC;
+    --ink-3:           #8E8E93;
+    --ink-4:           #6E6E73;
+    --hairline:        rgba(255,255,255,0.10);
+    --hairline-strong: rgba(255,255,255,0.18);
+    --accent:          #E27A66;            /* slightly lifted for AA against black */
+    --accent-hover:    #EE8E7B;
+    --shadow-card:     0 1px 2px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.5);
+  }
+}
+
+/* ============================================================
+   Reset + base
+   ============================================================ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tr-body);
+  color: var(--ink);
+  background: var(--canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* CJK punctuation hugging */
+  font-feature-settings: "palt" 1;
+}
+
+/* Mobile reduces section padding */
+@media (max-width: 760px) {
+  :root {
+    --section-y: 64px;
+    --section-x: 24px;
+  }
+}
+
+/* ============================================================
+   Semantic type classes
+   Use these on real elements: <h1 class="t-display">...</h1>
+   ============================================================ */
+.t-display-1,
+.t-display-2 {
+  font-weight: var(--w-extralight);   /* 200 — ultra-light hero */
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  margin: 0;
+  text-wrap: balance;
+}
+.t-display-1 { font-size: var(--fs-display-1); }
+.t-display-2 { font-size: var(--fs-display-2); }
+
+.t-h1, .t-h2, .t-h3, .t-h4 {
+  font-weight: var(--w-light);        /* 300 — light headings */
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+  margin: 0;
+  text-wrap: balance;
+}
+.t-h1 { font-size: var(--fs-h1); }
+.t-h2 { font-size: var(--fs-h2); }
+.t-h3 { font-size: var(--fs-h3); font-weight: var(--w-regular); }
+.t-h4 { font-size: var(--fs-h4); font-weight: var(--w-medium); letter-spacing: 0; }
+
+.t-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--w-regular);
+  color: var(--ink-2);
+}
+.t-body-sm {
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+.t-caption {
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+  line-height: var(--lh-ui);
+}
+.t-eyebrow {
+  font-size: var(--fs-micro);
+  font-weight: var(--w-medium);
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  line-height: var(--lh-ui);
+}
+
+/* Bilingual stacked pair — use inside .t-display or .t-h* */
+.t-cn { display: block; }
+.t-en {
+  display: block;
+  color: var(--ink-3);
+  font-weight: var(--w-extralight);
+  margin-top: 0.25em;
+  /* keep the En lockup smaller than its CN partner */
+  font-size: 0.45em;
+  letter-spacing: 0;
+  font-style: normal;
+}
+
+/* ============================================================
+   Primitives
+   ============================================================ */
+a { color: inherit; text-decoration: none; transition: opacity var(--dur) var(--ease); }
+a:hover { opacity: 0.65; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: 0 var(--s-5);
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--w-medium);
+  letter-spacing: 0;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--canvas);
+  transition:
+    background var(--dur) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+.btn:hover    { background: #000; opacity: 1; }
+.btn:active   { transform: scale(0.98); }
+
+.btn--accent  { background: var(--accent); color: #fff; }
+.btn--accent:hover  { background: var(--accent-hover); }
+.btn--accent:active { background: var(--accent-pressed); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hairline-strong);
+}
+.btn--ghost:hover { background: rgba(0,0,0,0.04); opacity: 1; }
+
+.btn--lg { min-height: 52px; padding: 0 var(--s-7); font-size: var(--fs-body); }
+
+.card {
+  background: var(--canvas-elevated);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition:
+    box-shadow var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: scale(1.005);
+}
+
+.hairline { border: 0; border-top: 1px solid var(--hairline); margin: 0; }
