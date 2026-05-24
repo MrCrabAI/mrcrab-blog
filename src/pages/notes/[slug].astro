@@ -1,0 +1,130 @@
+---
+import Base from '../../layouts/Base.astro';
+import Footer from '../../components/Footer.astro';
+import PostActions from '../../components/PostActions.tsx';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { tagLabel } from '../../data/tags';
+import { withBase } from '../../lib/url';
+import { fmtDateCN, fmtDateEN } from '../../lib/dates';
+
+export async function getStaticPaths() {
+  const notes = (await getCollection('notes')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  return notes.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, next: notes[i + 1] ?? notes[0] },
+  }));
+}
+
+type Props = { post: CollectionEntry<'notes'>; next: CollectionEntry<'notes'> };
+const { post, next } = Astro.props;
+const { data } = post;
+
+const cnParas = data.bodyCn.split('\n\n').map((s) => s.trim()).filter(Boolean);
+const enParas = data.bodyEn.split('\n\n').map((s) => s.trim()).filter(Boolean);
+const pullQuote = cnParas.length >= 2 ? cnParas[0].split('。')[0] + '。' : null;
+---
+
+<Base title={`${data.titleCn} · ${data.titleEn} — 蟹先生`} description={data.dekCn}>
+  <main class="page">
+    <div class="post-progress"><div class="post-progress__bar"></div></div>
+
+    <a class="post-back" href={withBase('/')} aria-label="Back to all notes">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path>
+      </svg>
+    </a>
+
+    <article class="post-article">
+      <div class="post-article__eyebrow">
+        <span class="tag">{tagLabel(data.tag).cn} · {tagLabel(data.tag).en}</span>
+        <span class="dot"></span>
+        <span>{fmtDateCN(data.date)}</span>
+        <span class="dot"></span>
+        <span>{data.readMin} 分钟阅读 · {data.readMin} min read</span>
+      </div>
+
+      <h1 class="post-article__title">
+        <span class="t-cn">{data.titleCn}</span>
+        <span class="t-en">{data.titleEn}</span>
+      </h1>
+
+      <p class="post-article__dek">
+        {data.dekCn}
+        <span class="en">{data.dekEn}</span>
+      </p>
+
+      <div class="post-article__byline">
+        <img src={withBase('/assets/mr_crab_mark.svg')} alt="" class="crab-mark" />
+        <div class="post-article__byline-text">
+          <span class="name">蟹先生 · Mr. Crab</span>
+          <span class="meta">{fmtDateEN(data.date)}</span>
+        </div>
+        <div class="post-article__byline-spacer"></div>
+      </div>
+
+      {data.hero && (
+        <div class="post-article__hero">
+          <img src={data.hero} alt="" />
+        </div>
+      )}
+
+      <div class="post-article__body">
+        <div class="lang-cn">
+          {cnParas.map((p, i) => (
+            <>
+              <p>{p}</p>
+              {i === 0 && pullQuote && cnParas.length > 2 && (
+                <blockquote class="post-article__pullquote">{pullQuote}</blockquote>
+              )}
+            </>
+          ))}
+        </div>
+        <div class="lang-en">
+          {enParas.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+
+      <PostActions client:idle />
+    </article>
+
+    <section class="post-next">
+      <div class="post-next__head">下一篇 · Read next</div>
+      <a class="post-next__card" href={withBase(`/notes/${next.id}`)}>
+        <div>
+          <h3 class="post-next__card-title">
+            <span class="t-cn">{next.data.titleCn}</span>
+            <span class="t-en">{next.data.titleEn}</span>
+          </h3>
+          <div class="post-next__card-meta">
+            {tagLabel(next.data.tag).en} · {fmtDateCN(next.data.date)} · {next.data.readMin} 分钟
+          </div>
+        </div>
+        <div class="post-next__arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path>
+          </svg>
+        </div>
+      </a>
+    </section>
+
+    <Footer />
+  </main>
+</Base>
+
+<script>
+  // Reading progress bar tied to the article height
+  const el = document.querySelector<HTMLElement>('.post-article');
+  const bar = document.querySelector<HTMLElement>('.post-progress__bar');
+  if (el && bar) {
+    const onScroll = () => {
+      const r = el.getBoundingClientRect();
+      const total = r.height - window.innerHeight;
+      const passed = Math.min(Math.max(-r.top, 0), total);
+      bar.style.width = (total > 0 ? (passed / total) * 100 : 0) + '%';
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

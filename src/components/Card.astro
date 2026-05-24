@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/url';
+import { tagLabel } from '../data/tags';
+import { fmtDateCN } from '../lib/dates';
+
+interface Props {
+  post: CollectionEntry<'notes'>;
+}
+const { post } = Astro.props;
+const { data } = post;
+const href = withBase(`/notes/${post.id}`);
+---
+
+<a class="post-card fade-in" href={href} data-tag={data.tag}>
+  {data.hero ? (
+    <div class="post-card__media">
+      <img src={data.hero} alt="" loading="lazy" />
+    </div>
+  ) : (
+    <div class="post-card__media is-text">
+      <div class="quote">「{data.titleCn}」</div>
+    </div>
+  )}
+  <div class="post-card__body">
+    <div class="post-card__meta">
+      <span class="post-card__tag">{tagLabel(data.tag).en}</span>
+      <span class="dot"></span>
+      <span>{fmtDateCN(data.date)}</span>
+      <span class="dot"></span>
+      <span>{data.readMin} 分钟</span>
+    </div>
+    <h3 class="post-card__title">
+      <span class="t-cn">{data.titleCn}</span>
+      <span class="t-en">{data.titleEn}</span>
+    </h3>
+    <p class="post-card__dek">{data.dekCn}</p>
+  </div>
+</a>

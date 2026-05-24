@@ -3,10 +3,8 @@
    Layered on top of colors_and_type.css (tokens).
    ============================================================ */
 
-/* ---------- Density (cosy/regular/roomy) -------------------- */
-:root[data-density="cosy"]   { --d-section: 64px;  --d-gap: 24px; --d-card-pad: 16px; }
-:root[data-density="regular"]{ --d-section: 96px;  --d-gap: 32px; --d-card-pad: 24px; }
-:root[data-density="roomy"]  { --d-section: 128px; --d-gap: 48px; --d-card-pad: 32px; }
+/* ---------- Layout rhythm (was the Tweaks "density" control) - */
+:root { --d-section: 96px; --d-gap: 32px; --d-card-pad: 24px; }
 
 /* ---------- Theme override (light/dark/auto) ---------------- */
 :root[data-theme="light"] {
@@ -60,6 +58,25 @@
   border: 1px solid var(--hairline); border-radius: 4px; color: var(--ink-3);
   margin-left: var(--s-2);
 }
+.nav__theme {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  color: var(--ink-2); border: 0; cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav__theme:hover { background: color-mix(in srgb, var(--ink) 10%, transparent); color: var(--ink); }
+.nav__theme svg { width: 18px; height: 18px; }
+/* show sun in dark mode, moon in light mode */
+.nav__theme .icon-sun { display: none; }
+.nav__theme .icon-moon { display: block; }
+:root[data-theme="dark"] .nav__theme .icon-sun { display: block; }
+:root[data-theme="dark"] .nav__theme .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .nav__theme .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .nav__theme .icon-moon { display: none; }
+}
+
 @media (max-width: 760px) {
   .nav__links { display: none; }
   .nav__search kbd { display: none; }
@@ -480,3 +497,14 @@
   padding: 12px 20px; border-radius: var(--r-pill);
   font-size: var(--fs-body-sm); box-shadow: var(--shadow-modal); z-index: 60;
 }
+
+/* ============================================================
+   Card-shaped links — cards/rows are real <a> now, so cancel
+   the global a:hover opacity dim (keep their own hover effects).
+   ============================================================ */
+.post-card:hover,
+.feat__hero:hover,
+.feat__read:hover,
+.l-minimal__row:hover,
+.l-journal__entry:hover,
+.post-next__card:hover { opacity: 1; }

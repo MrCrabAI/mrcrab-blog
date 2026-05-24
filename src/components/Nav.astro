@@ -1,0 +1,64 @@
+---
+import { withBase } from '../lib/url';
+
+interface Props {
+  active?: 'home' | 'about' | null;
+}
+const { active = null } = Astro.props;
+---
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href={withBase('/')}>
+      <img src={withBase('/assets/mr_crab_mark.svg')} alt="" class="crab-mark" />
+      <span>蟹先生</span>
+      <span class="nav__brand-sub">· 笔记</span>
+    </a>
+    <div class="nav__links">
+      <a href={withBase('/')} class={active === 'home' ? 'is-active' : ''}>笔记 · Notes</a>
+      <a href={withBase('/#about')} class={active === 'about' ? 'is-active' : ''}>关于 · About</a>
+      <a href="https://www.youtube.com" target="_blank" rel="noreferrer">视频 · Videos ↗</a>
+    </div>
+    <div class="nav__right">
+      <button class="nav__search" id="nav-search" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.5-3.5"></path>
+        </svg>
+        <span>搜索</span>
+        <kbd>⌘K</kbd>
+      </button>
+      <button class="nav__theme" id="nav-theme" type="button" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // --- Scrolled shadow ---
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav?.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // --- Search trigger (decoupled from the React island) ---
+  const fireSearch = () => window.dispatchEvent(new Event('open-search'));
+  document.getElementById('nav-search')?.addEventListener('click', fireSearch);
+
+  // --- Theme toggle (localStorage, no flash; init runs in <head>) ---
+  const root = document.documentElement;
+  const prefersDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.getElementById('nav-theme')?.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') || (prefersDark() ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+</script>

@@ -1,0 +1,205 @@
+---
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { TAGS, tagLabel } from '../data/tags';
+import { withBase } from '../lib/url';
+import { fmtDateCN } from '../lib/dates';
+
+const notes = (await getCollection('notes')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const counts: Record<string, number> = { all: notes.length };
+for (const n of notes) counts[n.data.tag] = (counts[n.data.tag] || 0) + 1;
+
+const featured = notes[0];
+const secondary = notes.slice(1, 3);
+const grid = notes.slice(3);
+const total = notes.length;
+const epNum = String(total).padStart(2, '0');
+---
+
+<Base activeNav="home">
+  <main class="page">
+    <!-- Masthead -->
+    <header class="masthead wrap">
+      <div class="masthead__eyebrow">蟹先生 · 笔记 / NOTES</div>
+      <h1 class="masthead__title">
+        <span class="t-cn">慢慢写。</span>
+        <span class="t-en">Writing, slowly.</span>
+      </h1>
+      <p class="masthead__sub">
+        视频之外，多一个慢一点的地方。每周一篇，关于日常里的小事。<br />
+        <em style="color: var(--ink-3)">A slower place beyond the videos — one short note a week, on small everyday things.</em>
+      </p>
+      <div class="tags" role="tablist" aria-label="Filter by tag">
+        {TAGS.map((t) => (
+          <button
+            role="tab"
+            data-tag={t.id}
+            aria-selected={t.id === 'all'}
+            class={'tag-chip' + (t.id === 'all' ? ' is-on' : '')}
+          >
+            <span class="tag-chip__cn">{t.cn}</span>
+            <span class="tag-chip__en">{t.en}</span>
+            {counts[t.id] != null && <span class="tag-chip__en" style="margin-left:2px">· {counts[t.id]}</span>}
+          </button>
+        ))}
+      </div>
+    </header>
+
+    <!-- Editorial composition (shown for "All") -->
+    <div class="l-editorial wrap" id="editorial">
+      <div class="section-head">
+        <h2 class="t-h3" style="font-weight: var(--w-light)">
+          <span class="t-cn" style="font-size:1.25rem">本周精选 · This week</span>
+        </h2>
+        <span class="num">EP. {epNum} / {total}</span>
+      </div>
+
+      <section class="feat fade-in">
+        <a class="feat__hero" href={withBase(`/notes/${featured.id}`)}>
+          {featured.data.hero
+            ? <img src={featured.data.hero} alt="" />
+            : <div style="width:100%;height:100%;background:var(--accent-tint)"></div>}
+          <div class="protect"></div>
+          <span class="feat__hero-tag">最新 · LATEST</span>
+        </a>
+        <div class="feat__body">
+          <div class="feat__meta">
+            <span style="color:var(--accent);text-transform:uppercase;letter-spacing:var(--tr-eyebrow);font-size:var(--fs-micro);font-weight:var(--w-medium)">
+              {tagLabel(featured.data.tag).en}
+            </span>
+            <span class="dot"></span>
+            <span>{fmtDateCN(featured.data.date)}</span>
+            <span class="dot"></span>
+            <span>{featured.data.readMin} 分钟阅读</span>
+          </div>
+          <a class="feat__title" href={withBase(`/notes/${featured.id}`)}>
+            <span class="t-cn">{featured.data.titleCn}</span>
+            <span class="t-en">{featured.data.titleEn}</span>
+          </a>
+          <p class="feat__dek">
+            {featured.data.dekCn}
+            <span class="en">{featured.data.dekEn}</span>
+          </p>
+          <a class="feat__read" href={withBase(`/notes/${featured.id}`)}>
+            阅读 · Read
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"></path><path d="m13 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      {secondary.length > 0 && (
+        <>
+          <div class="section-head">
+            <h2 class="t-h3" style="font-weight: var(--w-light); font-size:1.25rem">近期 · Recent</h2>
+            <span class="num">{secondary.length + grid.length} 篇 / {total} POSTS</span>
+          </div>
+          <div class="two-up">
+            {secondary.map((p) => <Card post={p} />)}
+          </div>
+        </>
+      )}
+
+      {grid.length > 0 && (
+        <div class="card-grid">
+          {grid.map((p) => <Card post={p} />)}
+        </div>
+      )}
+    </div>
+
+    <!-- Uniform grid (shown when a specific tag is selected) -->
+    <div class="l-editorial wrap" id="filtered" hidden>
+      <div class="section-head">
+        <h2 class="t-h3" style="font-weight: var(--w-light); font-size:1.25rem">
+          <span id="filtered-label">筛选 · Filtered</span>
+        </h2>
+        <span class="num" id="filtered-count"></span>
+      </div>
+      <div class="card-grid" id="filtered-grid">
+        {notes.map((p) => <Card post={p} />)}
+      </div>
+      <div id="filtered-empty" hidden style="padding: var(--s-9) 0; text-align:center; color: var(--ink-3)">
+        <p style="font-size: var(--fs-h4); font-weight: var(--w-light)">这个标签下还没有笔记。</p>
+        <p style="font-size: var(--fs-body-sm); font-style: italic">No notes under this tag yet.</p>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section class="about wrap" id="about">
+      <img class="about__mark crab-mark" src={withBase('/assets/mr_crab_mark.svg')} alt="" />
+      <div class="about__inner">
+        <div class="about__eyebrow">关于 · About</div>
+        <h2 class="about__lede">
+          <span class="t-cn">我叫蟹先生，<br />我拍我看到的小事。</span>
+          <span class="t-en">I'm Mr. Crab. I film small things I notice.</span>
+        </h2>
+        <div class="about__body">
+          <p>这个频道没有什么宏大的主题。一杯茶、一场雨、一段安静的早晨——如果其中有什么打动了我，我就把它记下来。</p>
+          <p style="font-style: italic; color: var(--ink-3)">
+            This channel doesn't chase big subjects. A cup of tea, an hour of rain, a quiet morning — if something stops me, I write it down. Then I film it, slowly.
+          </p>
+        </div>
+        <div class="about__sig">
+          <img src={withBase('/assets/mr_crab_mark.svg')} alt="" class="crab-mark" />
+          <span>— 蟹先生 · Mr. Crab</span>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.tag-chip');
+  const editorial = document.getElementById('editorial')!;
+  const filtered = document.getElementById('filtered')!;
+  const grid = document.getElementById('filtered-grid')!;
+  const empty = document.getElementById('filtered-empty')!;
+  const label = document.getElementById('filtered-label')!;
+  const count = document.getElementById('filtered-count')!;
+  const cards = Array.from(grid.querySelectorAll<HTMLElement>('.post-card'));
+
+  function selectTag(tag: string, cn: string, en: string) {
+    chips.forEach((c) => {
+      const on = c.dataset.tag === tag;
+      c.classList.toggle('is-on', on);
+      c.setAttribute('aria-selected', String(on));
+    });
+
+    if (tag === 'all') {
+      editorial.hidden = false;
+      filtered.hidden = true;
+      return;
+    }
+
+    editorial.hidden = true;
+    filtered.hidden = false;
+    let shown = 0;
+    cards.forEach((card) => {
+      const match = card.dataset.tag === tag;
+      card.style.display = match ? '' : 'none';
+      if (match) {
+        card.classList.add('is-in');
+        shown++;
+      }
+    });
+    label.textContent = `${cn} · ${en}`;
+    count.textContent = `${shown} 篇 / ${en.toUpperCase()}`;
+    empty.hidden = shown > 0;
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const cn = chip.querySelector('.tag-chip__cn')?.textContent ?? '';
+      const en = chip.querySelectorAll('.tag-chip__en')[0]?.textContent ?? '';
+      selectTag(chip.dataset.tag!, cn, en);
+    });
+  });
+</script>

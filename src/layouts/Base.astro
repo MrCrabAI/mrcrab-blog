@@ -1,0 +1,76 @@
+---
+import '../styles/tokens.css';
+import '../styles/app.css';
+import Nav from '../components/Nav.astro';
+import Search from '../components/Search.tsx';
+import { getCollection } from 'astro:content';
+import { withBase } from '../lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activeNav?: 'home' | 'about' | null;
+}
+const {
+  title = '蟹先生 · 笔记 / Mr. Crab — Notes',
+  description = '视频之外，多一个慢一点的地方。每周一篇，关于日常里的小事。',
+  activeNav = null,
+} = Astro.props;
+
+// Lightweight post index for the client-side search island.
+const notes = await getCollection('notes');
+const searchPosts = notes
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map((n) => ({
+    href: withBase(`/notes/${n.id}`),
+    titleCn: n.data.titleCn,
+    titleEn: n.data.titleEn,
+    dekCn: n.data.dekCn,
+    dekEn: n.data.dekEn,
+    body: `${n.data.bodyCn} ${n.data.bodyEn}`,
+    date: n.data.date.toISOString().slice(0, 10),
+    readMin: n.data.readMin,
+  }));
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href={withBase('/assets/mr_crab_mark.svg')} />
+    <!-- Apply saved theme before paint to avoid a flash -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'light' || t === 'dark')
+            document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <Nav active={activeNav} />
+    <slot />
+    <Search client:idle posts={searchPosts} />
+
+    <script>
+      // Scroll-in fade for any .fade-in element
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { rootMargin: '-40px' }
+      );
+      document.querySelectorAll('.fade-in').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
