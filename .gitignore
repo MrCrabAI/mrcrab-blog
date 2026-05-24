@@ -4,6 +4,8 @@ dist/
 node_modules/
 # astro
 .astro/
+# netlify
+.netlify/
 # environment variables
 .env
 .env.production

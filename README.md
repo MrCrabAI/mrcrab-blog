@@ -62,9 +62,16 @@ bodyEn: |
 
 ## Deploy
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds with
-`withastro/action` and publishes to GitHub Pages. Enable Pages → Source:
-**GitHub Actions** in repo settings once.
+The site builds for two hosts with different base paths, handled automatically
+in `astro.config.mjs`:
+
+- **GitHub Pages** — served under `/mrcrab-blog/`. Pushing to `main` triggers
+  `.github/workflows/deploy.yml`, which sets `GITHUB_PAGES=true` so the build
+  uses that base, then publishes via `withastro/action`.
+- **Netlify** — served at the domain root. `netlify.toml` runs `npm run build`
+  with no base flag. Connect the repo in the Netlify UI, or `netlify deploy --prod --build`.
+
+Local `npm run dev` and `npm run build` also use the root base.
 
 ## AI tooling
 
