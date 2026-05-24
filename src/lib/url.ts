@@ -1,6 +1,6 @@
-// Join Astro's configured base path (e.g. "/mrcrab-blog") with an app path.
-// Use for every internal href and asset src so links work on GitHub Pages
-// (served under a sub-path) and on a custom domain (served at root) alike.
+// Join Astro's configured base path with an app path. The base is currently
+// "/" (served at the domain root), but routing every internal href and asset
+// src through here keeps things correct if a sub-path base is ever set.
 const BASE = import.meta.env.BASE_URL;
 
 export function withBase(path: string): string {

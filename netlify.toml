@@ -1,5 +1,3 @@
-# Netlify serves the site at the domain root, so we do NOT set GITHUB_PAGES
-# here — astro.config.mjs then builds with the root base path.
 [build]
   command = "npm run build"
   publish = "dist"

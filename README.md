@@ -26,14 +26,10 @@ the search modal and post action rail.
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/mrcrab-blog/
+npm run dev      # http://localhost:4321/
 npm run build    # static output → dist/
 npm run preview  # preview the built site
 ```
-
-> The site is served under the `/mrcrab-blog` base path (see `astro.config.mjs`)
-> because it deploys to a GitHub Pages project site. For a custom domain, set
-> `site` to the domain and remove `base`.
 
 ## Writing a note
 
@@ -62,16 +58,10 @@ bodyEn: |
 
 ## Deploy
 
-The site builds for two hosts with different base paths, handled automatically
-in `astro.config.mjs`:
-
-- **GitHub Pages** — served under `/mrcrab-blog/`. Pushing to `main` triggers
-  `.github/workflows/deploy.yml`, which sets `GITHUB_PAGES=true` so the build
-  uses that base, then publishes via `withastro/action`.
-- **Netlify** — served at the domain root. `netlify.toml` runs `npm run build`
-  with no base flag. Connect the repo in the Netlify UI, or `netlify deploy --prod --build`.
-
-Local `npm run dev` and `npm run build` also use the root base.
+Hosted on **Netlify**, served at the domain root. `netlify.toml` defines the
+build (`npm run build` → `dist`). The repo is connected to Netlify, so every
+push to `main` triggers a deploy. For a one-off manual deploy:
+`netlify deploy --prod --build`.
 
 ## AI tooling
 
