@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/url';
+import CrabMark from './CrabMark.astro';
 
 interface Props {
   active?: 'home' | 'about' | null;
@@ -10,7 +11,7 @@ const { active = null } = Astro.props;
 <nav class="nav" id="nav">
   <div class="nav__inner">
     <a class="nav__brand" href={withBase('/')}>
-      <img src={withBase('/assets/mr_crab_mark.svg')} alt="" class="crab-mark" />
+      <CrabMark size={32} tile />
       <span>蟹先生</span>
       <span class="nav__brand-sub">· 笔记</span>
     </a>
@@ -28,15 +29,22 @@ const { active = null } = Astro.props;
         <span>搜索</span>
         <kbd>⌘K</kbd>
       </button>
-      <button class="nav__theme" id="nav-theme" type="button" aria-label="Toggle dark mode">
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-        </svg>
-      </button>
+      <div class="nav__theme-wrap">
+        <button class="nav__theme" id="theme-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="切换主题 · Theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21a9 9 0 1 1 0-18c4.97 0 9 3.58 9 8 0 2.5-2 4-4 4h-1.5a1.7 1.7 0 0 0-1.3 2.8A1.6 1.6 0 0 1 12 21z"></path>
+            <circle cx="7.5" cy="11" r="1" fill="currentColor" stroke="none"></circle>
+            <circle cx="12" cy="7.5" r="1" fill="currentColor" stroke="none"></circle>
+            <circle cx="16.5" cy="11" r="1" fill="currentColor" stroke="none"></circle>
+          </svg>
+        </button>
+        <div class="theme-menu" id="theme-menu" role="menu" hidden>
+          <button type="button" role="menuitemradio" data-theme-choice="auto">自动 · Auto</button>
+          <button type="button" role="menuitemradio" data-theme-choice="light">浅色 · Light</button>
+          <button type="button" role="menuitemradio" data-theme-choice="dark">深色 · Dark</button>
+          <button type="button" role="menuitemradio" data-theme-choice="bili">梗仓 · Bili</button>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -52,13 +60,48 @@ const { active = null } = Astro.props;
   const fireSearch = () => window.dispatchEvent(new Event('open-search'));
   document.getElementById('nav-search')?.addEventListener('click', fireSearch);
 
-  // --- Theme toggle (localStorage, no flash; init runs in <head>) ---
+  // --- Theme menu (auto / light / dark / bili; persisted; no-flash init in <head>) ---
   const root = document.documentElement;
-  const prefersDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
-  document.getElementById('nav-theme')?.addEventListener('click', () => {
-    const current = root.getAttribute('data-theme') || (prefersDark() ? 'dark' : 'light');
-    const next = current === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
+  const trigger = document.getElementById('theme-trigger');
+  const menu = document.getElementById('theme-menu');
+
+  const readTheme = () => {
+    try { return localStorage.getItem('theme') || 'auto'; } catch (e) { return 'auto'; }
+  };
+  const markActive = () => {
+    const cur = readTheme();
+    menu?.querySelectorAll('[data-theme-choice]').forEach((b) => {
+      const on = b.getAttribute('data-theme-choice') === cur;
+      b.setAttribute('aria-checked', String(on));
+      b.classList.toggle('is-active', on);
+    });
+  };
+  const applyTheme = (choice) => {
+    if (choice === 'auto') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', choice);
+    try { localStorage.setItem('theme', choice); } catch (e) {}
+    markActive();
+  };
+
+  const openMenu = (open) => {
+    if (!menu || !trigger) return;
+    menu.hidden = !open;
+    trigger.setAttribute('aria-expanded', String(open));
+  };
+
+  trigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openMenu(menu?.hidden ?? true);
   });
+  menu?.querySelectorAll('[data-theme-choice]').forEach((b) => {
+    b.addEventListener('click', () => {
+      applyTheme(b.getAttribute('data-theme-choice'));
+      openMenu(false);
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (menu && !menu.hidden && !menu.contains(e.target) && e.target !== trigger) openMenu(false);
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') openMenu(false); });
+  markActive();
 </script>

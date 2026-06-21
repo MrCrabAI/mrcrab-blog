@@ -21,6 +21,62 @@
 }
 :root[data-theme="dark"] .crab-mark { filter: invert(0.92); }
 
+/* ---------- Theme: 梗仓 / B站 skin (light-only, flat) -------- */
+:root[data-theme="bili"] {
+  --canvas: #F1F2F3; --canvas-elevated: #FFFFFF;
+  --ink: #18191C; --ink-2: #61666D; --ink-3: #9499A0; --ink-4: #9499A0;
+  --hairline: #E3E5E7; --hairline-strong: #D4D7DA;
+  --accent: #FB7299; --accent-hover: #EF5A85; --accent-pressed: #E14E79; --accent-tint: #FFF0F4;
+  /* flat: no card shadow */
+  --shadow-card: none; --shadow-card-hover: none; --shadow-nav: 0 1px 0 #E3E5E7;
+  /* system CJK stack, no webfont */
+  --font-sans: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  /* heavier type: remap the ultralight scale up to B站's bold feel */
+  --w-extralight: 700; --w-light: 500; --w-regular: 400; --w-medium: 600;
+  /* tighter radii */
+  --r-lg: 12px; --r-md: 10px;
+}
+/* shadow is gone under bili → give media a hairline so cards read as flat-bordered */
+:root[data-theme="bili"] .post-card__media,
+:root[data-theme="bili"] .feat__hero,
+:root[data-theme="bili"] .post-article__hero,
+:root[data-theme="bili"] .two-up .post-card__media { border: 1px solid var(--hairline); }
+/* no hover lift in the flat skin */
+:root[data-theme="bili"] .post-card:hover { transform: none; }
+/* active tag chip: pink text on soft-pink tint (B站 convention), not solid ink */
+:root[data-theme="bili"] .tag-chip.is-on {
+  background: var(--accent-tint); color: var(--accent); border-color: var(--accent-tint);
+}
+:root[data-theme="bili"] .tag-chip.is-on .tag-chip__en { color: color-mix(in srgb, var(--accent) 70%, transparent); }
+
+/* --- bili tri-color system: pink=primary · blue=link/secondary · gold=hot/origin --- */
+:root[data-theme="bili"] {
+  --bili-blue: #00AEEC; --bili-blue-soft: #EBF9FE;
+  --bili-gold: #C77700; --bili-gold-soft: #FFF6E5;
+}
+/* signature gold→pink rail under the masthead title (the one allowed gradient) */
+:root[data-theme="bili"] .masthead__title::after {
+  content: ''; display: block; width: 132px; height: 5px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--bili-gold), var(--accent)); margin-top: var(--s-5);
+}
+/* GOLD — latest / hot / episode markers */
+:root[data-theme="bili"] .feat__hero-tag {
+  background: var(--bili-gold); backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+:root[data-theme="bili"] .l-editorial .section-head .num { color: var(--bili-gold); }
+:root[data-theme="bili"] .l-journal__month .cnt { color: var(--bili-gold); }
+/* BLUE — links / secondary actions / category tags */
+:root[data-theme="bili"] .post-card__tag,
+:root[data-theme="bili"] .l-minimal__tag,
+:root[data-theme="bili"] .l-journal__date .tag,
+:root[data-theme="bili"] .post-article__eyebrow .tag { color: var(--bili-blue); }
+:root[data-theme="bili"] .feat__read,
+:root[data-theme="bili"] .feat__read:hover { color: var(--bili-blue); border-color: var(--bili-blue); }
+:root[data-theme="bili"] .nav__links a:hover { color: var(--bili-blue); opacity: 1; }
+:root[data-theme="bili"] .post-next__card:hover { border-color: var(--bili-blue); }
+:root[data-theme="bili"] .post-article__body a { color: var(--bili-blue); }
+/* PINK keeps: active chip, featured category, pull-quote, brand tile (already accent) */
+
 /* ---------- Layout shell ----------------------------------- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--section-x); }
 
@@ -67,14 +123,28 @@
 }
 .nav__theme:hover { background: color-mix(in srgb, var(--ink) 10%, transparent); color: var(--ink); }
 .nav__theme svg { width: 18px; height: 18px; }
-/* show sun in dark mode, moon in light mode */
-.nav__theme .icon-sun { display: none; }
-.nav__theme .icon-moon { display: block; }
-:root[data-theme="dark"] .nav__theme .icon-sun { display: block; }
-:root[data-theme="dark"] .nav__theme .icon-moon { display: none; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .nav__theme .icon-sun { display: block; }
-  :root:not([data-theme="light"]) .nav__theme .icon-moon { display: none; }
+
+/* Theme menu (popover) */
+.nav__theme-wrap { position: relative; }
+.theme-menu {
+  position: absolute; right: 0; top: calc(100% + 8px);
+  background: var(--canvas-elevated); border: 1px solid var(--hairline);
+  border-radius: var(--r-md); box-shadow: var(--shadow-card);
+  padding: 6px; min-width: 156px; z-index: 30;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.theme-menu[hidden] { display: none; }
+.theme-menu button {
+  font: inherit; font-size: var(--fs-caption); text-align: left;
+  background: transparent; border: 0; cursor: pointer; color: var(--ink-2);
+  padding: 8px 10px; border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.theme-menu button:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); color: var(--ink); }
+.theme-menu button.is-active { color: var(--ink); font-weight: var(--w-medium); }
+.theme-menu button.is-active::after {
+  content: '✓'; color: var(--accent); font-size: var(--fs-caption);
 }
 
 @media (max-width: 760px) {
