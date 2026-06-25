@@ -43,11 +43,21 @@
 :root[data-theme="bili"] .two-up .post-card__media { border: 1px solid var(--hairline); }
 /* no hover lift in the flat skin */
 :root[data-theme="bili"] .post-card:hover { transform: none; }
-/* active tag chip: pink text on soft-pink tint (B站 convention), not solid ink */
-:root[data-theme="bili"] .tag-chip.is-on {
-  background: var(--accent-tint); color: var(--accent); border-color: var(--accent-tint);
+/* vivid B站 chip rail: every chip wears its accent on a soft tint; active = filled solid */
+:root[data-theme="bili"] .tag-chip {
+  --chip: #FB7299; --chip-soft: #FFF0F4;
+  background: var(--chip-soft); color: var(--chip); border-color: transparent; font-weight: var(--w-medium);
 }
-:root[data-theme="bili"] .tag-chip.is-on .tag-chip__en { color: color-mix(in srgb, var(--accent) 70%, transparent); }
+:root[data-theme="bili"] .tag-chip[data-tag="notes"],
+:root[data-theme="bili"] .tag-chip[data-tag="walks"] { --chip: #00AEEC; --chip-soft: #EBF9FE; }
+:root[data-theme="bili"] .tag-chip[data-tag="tea"],
+:root[data-theme="bili"] .tag-chip[data-tag="craft"] { --chip: #C77700; --chip-soft: #FFF6E5; }
+:root[data-theme="bili"] .tag-chip__en { color: color-mix(in srgb, var(--chip) 60%, transparent); }
+:root[data-theme="bili"] .tag-chip:hover { background: color-mix(in srgb, var(--chip) 18%, #fff); }
+:root[data-theme="bili"] .tag-chip.is-on,
+:root[data-theme="bili"] .tag-chip.is-on:hover { background: var(--chip); border-color: var(--chip); }
+:root[data-theme="bili"] .tag-chip.is-on .tag-chip__cn,
+:root[data-theme="bili"] .tag-chip.is-on .tag-chip__en { color: #fff; }
 
 /* --- bili tri-color system: pink=primary · blue=link/secondary · gold=hot/origin --- */
 :root[data-theme="bili"] {
@@ -55,10 +65,13 @@
   --bili-gold: #C77700; --bili-gold-soft: #FFF6E5;
 }
 /* signature gold→pink rail under the masthead title (the one allowed gradient) */
+:root[data-theme="bili"] .masthead__title { font-weight: 800; letter-spacing: -0.02em; }
 :root[data-theme="bili"] .masthead__title::after {
-  content: ''; display: block; width: 132px; height: 5px; border-radius: 999px;
-  background: linear-gradient(90deg, var(--bili-gold), var(--accent)); margin-top: var(--s-5);
+  content: ''; display: block; width: 168px; height: 6px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--bili-gold), var(--accent)); margin-top: var(--s-6);
 }
+/* gold eyebrows (the archaeology label feel) */
+:root[data-theme="bili"] .masthead__eyebrow { color: var(--bili-gold); font-weight: 700; }
 /* GOLD — latest / hot / episode markers */
 :root[data-theme="bili"] .feat__hero-tag {
   background: var(--bili-gold); backdrop-filter: none; -webkit-backdrop-filter: none;
@@ -70,12 +83,61 @@
 :root[data-theme="bili"] .l-minimal__tag,
 :root[data-theme="bili"] .l-journal__date .tag,
 :root[data-theme="bili"] .post-article__eyebrow .tag { color: var(--bili-blue); }
-:root[data-theme="bili"] .feat__read,
-:root[data-theme="bili"] .feat__read:hover { color: var(--bili-blue); border-color: var(--bili-blue); }
+:root[data-theme="bili"] .feat__read {
+  background: var(--accent); color: #fff; border: 0; border-radius: var(--r-pill);
+  padding: 10px 20px; font-weight: var(--w-medium);
+}
+:root[data-theme="bili"] .feat__read:hover { background: var(--accent-hover); color: #fff; }
 :root[data-theme="bili"] .nav__links a:hover { color: var(--bili-blue); opacity: 1; }
 :root[data-theme="bili"] .post-next__card:hover { border-color: var(--bili-blue); }
 :root[data-theme="bili"] .post-article__body a { color: var(--bili-blue); }
 /* PINK keeps: active chip, featured category, pull-quote, brand tile (already accent) */
+
+/* --- extra B站 punch --- */
+/* bolder brand wordmark next to the pink tile */
+:root[data-theme="bili"] .nav__brand { font-weight: 700; }
+/* tab-style 3px pink underline on the active nav link */
+:root[data-theme="bili"] .nav__links a.is-active { color: var(--accent); position: relative; }
+:root[data-theme="bili"] .nav__links a.is-active::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -8px;
+  height: 3px; border-radius: 2px; background: var(--accent);
+}
+/* B站 hover = color-shift, not lift: titles go pink on hover */
+:root[data-theme="bili"] .post-card:hover .post-card__title,
+:root[data-theme="bili"] .feat__title:hover,
+:root[data-theme="bili"] .l-minimal__row:hover .l-minimal__title,
+:root[data-theme="bili"] .l-journal__entry:hover .l-journal__title { color: var(--accent); }
+/* section heads: heavier + a gold tick before the title */
+:root[data-theme="bili"] .section-head h2 { font-weight: 700; }
+:root[data-theme="bili"] .section-head h2 .t-cn::before {
+  content: ''; display: inline-block; width: 4px; height: 1em; vertical-align: -2px;
+  margin-right: 10px; border-radius: 2px; background: linear-gradient(var(--bili-gold), var(--accent));
+}
+/* featured hero: gold→pink bottom rail to echo the masthead */
+:root[data-theme="bili"] .feat__hero { border-bottom: 4px solid transparent; border-image: linear-gradient(90deg, var(--bili-gold), var(--accent)) 1; }
+
+/* === stronger v2: confident color mass === */
+/* gradient-filled masthead title (gold→pink) — the loudest signature move */
+:root[data-theme="bili"] .masthead__title .t-cn {
+  background: linear-gradient(90deg, var(--bili-gold) 0%, var(--accent) 70%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+/* category labels become filled soft-tint pills (denser B站 chip feel) */
+:root[data-theme="bili"] .post-card__tag,
+:root[data-theme="bili"] .l-minimal__tag,
+:root[data-theme="bili"] .l-journal__date .tag {
+  background: var(--bili-blue-soft); padding: 3px 9px; border-radius: var(--r-pill);
+}
+/* featured category pill (pink, in the meta row) */
+:root[data-theme="bili"] .feat__meta > span:first-child {
+  background: var(--accent-tint); padding: 3px 9px; border-radius: var(--r-pill);
+}
+/* bigger, louder section headers */
+:root[data-theme="bili"] .section-head h2 .t-cn { font-size: 1.5rem !important; }
+/* fatter, bolder LATEST badge */
+:root[data-theme="bili"] .feat__hero-tag { padding: 8px 14px; font-weight: 700; }
+/* pink hairline under the nav for a stronger header edge */
+:root[data-theme="bili"] .nav { border-bottom: 2px solid var(--accent-tint); }
 
 /* ---------- Layout shell ----------------------------------- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--section-x); }
