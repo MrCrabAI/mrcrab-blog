@@ -9,7 +9,7 @@ const notes = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/notes' }),
   schema: z.object({
     date: z.coerce.date(),
-    tag: z.enum(['notes', 'tea', 'cooking', 'walks', 'craft']),
+    tag: z.enum(['notes', 'tea', 'cooking', 'walks', 'craft', 'genesis']),
     readMin: z.number(),
     titleCn: z.string(),
     titleEn: z.string(),
@@ -18,6 +18,10 @@ const notes = defineCollection({
     hero: z.string().nullable().optional(),
     bodyCn: z.string(),
     bodyEn: z.string(),
+    // Optional closing pull-quote. When set, it overrides the default
+    // (first-sentence) pull-quote and renders at the END of each language block.
+    pullQuoteCn: z.string().optional(),
+    pullQuoteEn: z.string().optional(),
   }),
 });
 

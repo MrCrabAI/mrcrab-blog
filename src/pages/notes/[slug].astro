@@ -23,7 +23,9 @@ const { data } = post;
 
 const cnParas = data.bodyCn.split('\n\n').map((s) => s.trim()).filter(Boolean);
 const enParas = data.bodyEn.split('\n\n').map((s) => s.trim()).filter(Boolean);
-const pullQuote = cnParas.length >= 2 ? cnParas[0].split('。')[0] + '。' : null;
+// A custom closing pull-quote (frontmatter) wins; otherwise auto-pull the
+// first sentence as a mid-text quote (default behavior for the other posts).
+const autoPull = !data.pullQuoteCn && cnParas.length >= 2 ? cnParas[0].split('。')[0] + '。' : null;
 ---
 
 <Base title={`${data.titleCn} · ${data.titleEn} — 蟹先生`} description={data.dekCn}>
@@ -75,14 +77,20 @@ const pullQuote = cnParas.length >= 2 ? cnParas[0].split('。')[0] + '。' : nul
           {cnParas.map((p, i) => (
             <>
               <p>{p}</p>
-              {i === 0 && pullQuote && cnParas.length > 2 && (
-                <blockquote class="post-article__pullquote">{pullQuote}</blockquote>
+              {i === 0 && autoPull && cnParas.length > 2 && (
+                <blockquote class="post-article__pullquote">{autoPull}</blockquote>
               )}
             </>
           ))}
+          {data.pullQuoteCn && (
+            <blockquote class="post-article__pullquote">{data.pullQuoteCn}</blockquote>
+          )}
         </div>
         <div class="lang-en">
           {enParas.map((p) => <p>{p}</p>)}
+          {data.pullQuoteEn && (
+            <blockquote class="post-article__pullquote">{data.pullQuoteEn}</blockquote>
+          )}
         </div>
       </div>
 
