@@ -16,6 +16,9 @@ const notes = defineCollection({
     dekCn: z.string(),
     dekEn: z.string(),
     hero: z.string().nullable().optional(),
+    // CSS object-position for the hero image's cover crop (e.g. "left", "30% center").
+    // Lets a wide image keep its key subject in frame on the cropped cards.
+    heroPosition: z.string().optional(),
     bodyCn: z.string(),
     bodyEn: z.string(),
     // Optional closing pull-quote. When set, it overrides the default

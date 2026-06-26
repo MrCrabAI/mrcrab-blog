@@ -15,7 +15,7 @@ const href = withBase(`/notes/${post.id}`);
 <a class="post-card fade-in" href={href} data-tag={data.tag}>
   {data.hero ? (
     <div class="post-card__media">
-      <img src={data.hero} alt="" loading="lazy" />
+      <img src={data.hero} alt="" loading="lazy" style={data.heroPosition ? `object-position:${data.heroPosition}` : undefined} />
     </div>
   ) : (
     <div class="post-card__media is-text">

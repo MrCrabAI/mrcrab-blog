@@ -62,7 +62,7 @@ const epNum = String(total).padStart(2, '0');
       <section class="feat fade-in">
         <a class="feat__hero" href={withBase(`/notes/${featured.id}`)}>
           {featured.data.hero
-            ? <img src={featured.data.hero} alt="" />
+            ? <img src={featured.data.hero} alt="" style={featured.data.heroPosition ? `object-position:${featured.data.heroPosition}` : undefined} />
             : <div style="width:100%;height:100%;background:var(--accent-tint)"></div>}
           <div class="protect"></div>
           <span class="feat__hero-tag">最新 · LATEST</span>
