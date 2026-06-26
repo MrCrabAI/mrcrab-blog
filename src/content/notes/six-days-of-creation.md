@@ -15,7 +15,7 @@ bodyCn: |
 
   第三日，众水相连——于是有了互联网，世界铺开。
 
-  第四日，要有光体照明——于是有了数据与搜索，万物可被找见。
+  第四日，要有记号与节令——于是有了数据与搜索，万物可被找见。
 
   第五日，水要滋生会学习的活物——于是有了神经网络。
 
@@ -27,7 +27,7 @@ bodyEn: |
 
   On the third day: let the waters be joined — the network, and a world spread out.
 
-  On the fourth day: let there be lights to know the world — data and search.
+  On the fourth day: let there be signs and seasons — data and search, and all things can be found.
 
   On the fifth day: let the waters bring forth things that learn — the neural net.
 
