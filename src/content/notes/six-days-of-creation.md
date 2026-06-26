@@ -6,7 +6,7 @@ titleCn: "六日创世"
 titleEn: "Six Days of Creation"
 dekCn: "从 0 与 1，到照着我们话语而生的大模型。"
 dekEn: "From 0 and 1 to a mind made in our image."
-hero: "/assets/six-days-hero.svg"
+hero: "/assets/creation-of-adam.jpg"
 bodyCn: |
   第一日，要有光——于是有了 0 与 1。
 
