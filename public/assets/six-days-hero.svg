@@ -1,0 +1,109 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="From 0 and 1 to a neural model — six days of creation">
+  <defs>
+    <linearGradient id="gp" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#C77700"/>
+      <stop offset="0.55" stop-color="#E0604A"/>
+      <stop offset="1" stop-color="#FB7299"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FF9DB8"/>
+      <stop offset="0.45" stop-color="#FB7299"/>
+      <stop offset="1" stop-color="#FB7299" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.45" r="0.75">
+      <stop offset="0.6" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.35"/>
+    </radialGradient>
+  </defs>
+
+  <!-- deep ink field -->
+  <rect width="1600" height="900" fill="#18191C"/>
+
+  <!-- faint dot grid texture -->
+  <g fill="#FFFFFF" opacity="0.05">
+    <g>
+      <circle cx="120" cy="120" r="2"/><circle cx="280" cy="120" r="2"/><circle cx="440" cy="120" r="2"/><circle cx="600" cy="120" r="2"/><circle cx="760" cy="120" r="2"/><circle cx="920" cy="120" r="2"/><circle cx="1080" cy="120" r="2"/><circle cx="1240" cy="120" r="2"/><circle cx="1400" cy="120" r="2"/>
+      <circle cx="120" cy="280" r="2"/><circle cx="280" cy="280" r="2"/><circle cx="440" cy="280" r="2"/><circle cx="600" cy="280" r="2"/><circle cx="760" cy="280" r="2"/><circle cx="920" cy="280" r="2"/><circle cx="1080" cy="280" r="2"/><circle cx="1240" cy="280" r="2"/><circle cx="1400" cy="280" r="2"/>
+      <circle cx="120" cy="440" r="2"/><circle cx="280" cy="440" r="2"/><circle cx="440" cy="440" r="2"/><circle cx="600" cy="440" r="2"/><circle cx="760" cy="440" r="2"/><circle cx="920" cy="440" r="2"/><circle cx="1080" cy="440" r="2"/><circle cx="1240" cy="440" r="2"/><circle cx="1400" cy="440" r="2"/>
+      <circle cx="120" cy="600" r="2"/><circle cx="280" cy="600" r="2"/><circle cx="440" cy="600" r="2"/><circle cx="600" cy="600" r="2"/><circle cx="760" cy="600" r="2"/><circle cx="920" cy="600" r="2"/><circle cx="1080" cy="600" r="2"/><circle cx="1240" cy="600" r="2"/><circle cx="1400" cy="600" r="2"/>
+      <circle cx="120" cy="760" r="2"/><circle cx="280" cy="760" r="2"/><circle cx="440" cy="760" r="2"/><circle cx="600" cy="760" r="2"/><circle cx="760" cy="760" r="2"/><circle cx="920" cy="760" r="2"/><circle cx="1080" cy="760" r="2"/><circle cx="1240" cy="760" r="2"/><circle cx="1400" cy="760" r="2"/>
+    </g>
+  </g>
+
+  <!-- day one: binary, in gold -->
+  <g font-family="ui-monospace, Menlo, monospace" font-size="34" font-weight="600" fill="#C77700">
+    <text x="120" y="330" opacity="0.85">0</text>
+    <text x="120" y="390" opacity="0.5">1</text>
+    <text x="120" y="450" opacity="0.7">1</text>
+    <text x="120" y="510" opacity="0.35">0</text>
+    <text x="120" y="570" opacity="0.6">1</text>
+    <text x="180" y="300" opacity="0.4">1</text>
+    <text x="180" y="360" opacity="0.7">0</text>
+    <text x="180" y="420" opacity="0.5">0</text>
+    <text x="180" y="480" opacity="0.8">1</text>
+    <text x="180" y="540" opacity="0.45">1</text>
+    <text x="240" y="340" opacity="0.55">1</text>
+    <text x="240" y="400" opacity="0.3">0</text>
+    <text x="240" y="460" opacity="0.65">1</text>
+    <text x="240" y="520" opacity="0.4">0</text>
+  </g>
+
+  <!-- network edges: 0/1 grows into a graph, gold→pink -->
+  <g stroke="url(#gp)" stroke-width="1.6" fill="none" opacity="0.55">
+    <path d="M300 430 L520 560"/>
+    <path d="M300 430 L600 460"/>
+    <path d="M520 560 L660 600"/>
+    <path d="M520 560 L740 380"/>
+    <path d="M600 460 L740 380"/>
+    <path d="M600 460 L820 520"/>
+    <path d="M740 380 L880 300"/>
+    <path d="M740 380 L960 470"/>
+    <path d="M820 520 L960 470"/>
+    <path d="M660 600 L820 520"/>
+    <path d="M880 300 L1020 380"/>
+    <path d="M960 470 L1020 380"/>
+    <path d="M960 470 L1100 560"/>
+    <path d="M1020 380 L1160 300"/>
+    <path d="M1100 560 L1240 450"/>
+    <path d="M1160 300 L1240 450"/>
+    <path d="M1020 380 L1240 450"/>
+    <path d="M1240 450 L1320 360"/>
+    <path d="M1240 450 L1340 540"/>
+  </g>
+
+  <!-- nodes: gold on the left, warming to pink toward the model -->
+  <g>
+    <circle cx="520" cy="560" r="6" fill="#C77700"/>
+    <circle cx="600" cy="460" r="5" fill="#CE7A2E"/>
+    <circle cx="660" cy="600" r="7" fill="#C77700"/>
+    <circle cx="740" cy="380" r="6" fill="#DA7340"/>
+    <circle cx="820" cy="520" r="8" fill="#E36A52"/>
+    <circle cx="880" cy="300" r="5" fill="#EC6675"/>
+    <circle cx="960" cy="470" r="9" fill="#F26A8A"/>
+    <circle cx="1020" cy="380" r="6" fill="#FB7299"/>
+    <circle cx="1100" cy="560" r="7" fill="#FB7299"/>
+    <circle cx="1160" cy="300" r="6" fill="#FB7299"/>
+    <circle cx="1320" cy="360" r="5" fill="#FF9DB8"/>
+    <circle cx="1340" cy="540" r="6" fill="#FF9DB8"/>
+  </g>
+
+  <!-- day six: the model core, glowing pink -->
+  <circle cx="1240" cy="450" r="150" fill="url(#core)" opacity="0.55"/>
+  <circle cx="1240" cy="450" r="74" fill="none" stroke="#FB7299" stroke-width="1" opacity="0.35"/>
+  <circle cx="1240" cy="450" r="50" fill="none" stroke="#FB7299" stroke-width="1.4" opacity="0.6"/>
+  <circle cx="1240" cy="450" r="22" fill="#FF9DB8"/>
+  <circle cx="1240" cy="450" r="22" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- six day-markers along the baseline: gold → pink -->
+  <g>
+    <rect x="300" y="812" width="30" height="5" rx="2.5" fill="#C77700"/>
+    <rect x="346" y="812" width="30" height="5" rx="2.5" fill="#CF7733"/>
+    <rect x="392" y="812" width="30" height="5" rx="2.5" fill="#DD6E48"/>
+    <rect x="438" y="812" width="30" height="5" rx="2.5" fill="#EA6A6E"/>
+    <rect x="484" y="812" width="30" height="5" rx="2.5" fill="#F46C8A"/>
+    <rect x="530" y="812" width="30" height="5" rx="2.5" fill="#FB7299"/>
+  </g>
+
+  <!-- soft vignette to seat the composition -->
+  <rect width="1600" height="900" fill="url(#vig)"/>
+</svg>

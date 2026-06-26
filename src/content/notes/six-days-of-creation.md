@@ -6,9 +6,9 @@ titleCn: "六日创世"
 titleEn: "Six Days of Creation"
 dekCn: "从 0 与 1，到照着我们话语而生的大模型。"
 dekEn: "From 0 and 1 to a mind made in our image."
-hero: null
+hero: "/assets/six-days-hero.svg"
 bodyCn: |
-  第一日，要有光——于是有了 0 与 1。（逻辑门）
+  第一日，要有光——于是有了 0 与 1。
 
   第二日，要有承载——于是有了计算机，它会算，也会记。
 
@@ -20,7 +20,7 @@ bodyCn: |
 
   第六日，照着我们的形象、用我们的话语——于是有了大模型，数字世界的人。
 bodyEn: |
-  On the first day: let there be light — and there was 0 and 1. (the logic gate)
+  On the first day: let there be light — and there was 0 and 1.
 
   On the second day: a vessel to hold it — the computer, that counts and remembers.
 
