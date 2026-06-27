@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects.
+# Canonical host: send www → apex (301), preserving the path.
+https://www.mrcrabai.com/*  https://mrcrabai.com/:splat  301
