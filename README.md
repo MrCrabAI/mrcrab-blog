@@ -58,10 +58,10 @@ bodyEn: |
 
 ## Deploy
 
-Hosted on **Netlify**, served at the domain root. `netlify.toml` defines the
-build (`npm run build` → `dist`). The repo is connected to Netlify, so every
-push to `main` triggers a deploy. For a one-off manual deploy:
-`netlify deploy --prod --build`.
+Hosted on **Cloudflare Pages** at **[mrcrabai.com](https://mrcrabai.com)**. The
+repo is connected to Cloudflare via Git, so every push to `main` builds
+(`npm run build` → `dist`) and deploys automatically. The custom domain (apex +
+`www`) and DNS are managed in the Cloudflare account that owns the zone.
 
 ## AI tooling
 
