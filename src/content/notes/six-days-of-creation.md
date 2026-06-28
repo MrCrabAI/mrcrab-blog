@@ -4,12 +4,12 @@ tag: genesis
 readMin: 2
 titleCn: "六日创世"
 titleEn: "Six Days of Creation"
-dekCn: "从 0 与 1，到照着我们话语而生的大模型。"
+dekCn: "从 0 和 1，到照着我们话语而生的大模型。"
 dekEn: "From 0 and 1 to a mind made in our image."
 hero: "/assets/creation-of-adam.jpg"
 heroPosition: "25% center"
 bodyCn: |
-  第一日，要有光——于是有了 0 与 1。
+  第一日，要有光——于是有了 0 和 1。
 
   第二日，要有承载——于是有了计算机，它会算，也会记。
 
