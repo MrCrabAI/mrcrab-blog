@@ -544,6 +544,78 @@
   line-height: var(--lh-tight); color: var(--ink);
 }
 
+/* Long-form article prose (article: true posts render markdown here) */
+.post-article__body .prose { color: var(--ink); }
+.post-article__body .prose > :first-child { margin-top: 0; }
+.post-article__body .prose p { margin: 0 0 1.4em; }
+.post-article__body .prose h2 {
+  font-size: var(--fs-h3); font-weight: var(--w-regular); line-height: var(--lh-tight);
+  color: var(--ink); margin: 2em 0 0.7em; padding-top: var(--s-6);
+  border-top: 1px solid var(--hairline);
+}
+.post-article__body .prose h3 {
+  font-size: 1.375rem; font-weight: var(--w-medium); color: var(--ink);
+  margin: 1.8em 0 0.6em;
+}
+.post-article__body .prose ul,
+.post-article__body .prose ol { margin: 0 0 1.4em; padding-left: 1.4em; }
+.post-article__body .prose li { margin: 0 0 0.6em; padding-left: 0.2em; }
+.post-article__body .prose li::marker { color: var(--ink-3); }
+.post-article__body .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.post-article__body .prose strong { font-weight: var(--w-medium); color: var(--ink); }
+.post-article__body .prose em { color: var(--ink-2); }
+
+/* Figures / images + caption (the "*▲ …*" lines become emphasized paragraphs) */
+.post-article__body .prose img {
+  display: block; width: 100%; height: auto;
+  border-radius: var(--r-md); box-shadow: var(--shadow-card);
+  margin: var(--s-6) 0 var(--s-4);
+}
+
+/* Inline code + fenced code blocks */
+.post-article__body .prose code {
+  font-family: var(--font-mono); font-size: 0.86em;
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  padding: 0.15em 0.4em; border-radius: var(--r-sm);
+}
+.post-article__body .prose pre {
+  background: var(--canvas-elevated); border: 1px solid var(--hairline);
+  border-radius: var(--r-md); padding: var(--s-5) var(--s-6);
+  overflow-x: auto; margin: 0 0 1.6em; line-height: 1.6;
+  font-size: 0.95rem;
+}
+.post-article__body .prose pre code {
+  background: none; padding: 0; border-radius: 0; font-size: inherit;
+}
+
+/* Tables */
+.post-article__body .prose .table-scroll,
+.post-article__body .prose table { margin: 0 0 1.6em; }
+.post-article__body .prose table {
+  width: 100%; border-collapse: collapse; font-size: 1rem; line-height: 1.55;
+  display: block; overflow-x: auto;
+}
+.post-article__body .prose th,
+.post-article__body .prose td {
+  text-align: left; padding: 0.6em 0.9em; border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+}
+.post-article__body .prose th {
+  font-weight: var(--w-medium); color: var(--ink);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.post-article__body .prose td { color: var(--ink-2); }
+
+/* Intro blockquote + rules */
+.post-article__body .prose blockquote {
+  border-left: 2px solid var(--accent); padding: var(--s-2) 0 var(--s-2) var(--s-5);
+  margin: 0 0 1.6em; color: var(--ink-2); font-size: 1.0625rem; line-height: 1.7;
+}
+.post-article__body .prose blockquote p { margin: 0; }
+.post-article__body .prose hr {
+  border: 0; border-top: 1px solid var(--hairline); margin: var(--s-8) 0;
+}
+
 /* Action rail (bookmark, like, share) */
 .post-actions {
   position: sticky; bottom: var(--s-5); margin: var(--s-9) auto 0;

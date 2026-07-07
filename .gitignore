@@ -13,3 +13,5 @@ node_modules/
 .DS_Store
 # logs
 npm-debug.log*
+# mockup render tool: temp headless-Chrome profiles (only exist mid-run)
+tools/mockups/.chrome*

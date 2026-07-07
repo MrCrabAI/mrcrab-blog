@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="shot" content="1180x960"><link rel="stylesheet" href="../term.css"></head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+    <div class="title">mrcrab — claude · ai-money-map — 118×42</div>
+  </div>
+  <div class="term">
+    <div class="line user">&gt; 给 src/utils/format.ts 的 formatAmount 补上单元测试,跑通为止</div>
+    <div class="line"> </div>
+    <div class="line">⏺ 先看实现和现有的测试配置,再动手。</div>
+    <div class="line"> </div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Read</span><span class="dim">(src/utils/format.ts)</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="dim">Read 48 lines</span></div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Search</span><span class="dim">(pattern: "**/*.test.ts")</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="dim">Found 3 files (ctrl+o to expand)</span></div>
+    <div class="line"> </div>
+    <div class="line">⏺ 项目用 vitest。formatAmount 负责「亿 / 万亿」金额格式化,我写 6 个用例覆盖整数、小数、边界和空值。</div>
+    <div class="line"> </div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Write</span><span class="dim">(src/utils/format.test.ts)</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="dim">Wrote 36 lines to src/utils/format.test.ts</span></div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Bash</span><span class="dim">(npx vitest run src/utils/format.test.ts)</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="errx">×</span> <span class="dim">formatAmount &gt; 金额为 0 时应显示 "0"</span></div>
+    <div class="line">     <span class="dim">Tests  5 passed | 1 failed (6)</span></div>
+    <div class="line"> </div>
+    <div class="line">⏺ 测试抓到一个真 bug:formatAmount(0) 掉进了 !v 分支,0 被显示成「—」。修掉:</div>
+    <div class="line"> </div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Update</span><span class="dim">(src/utils/format.ts)</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="dim">Updated src/utils/format.ts with 1 addition and 1 removal</span></div>
+    <div class="line"><span class="dimmer">       12   </span><span class="dim"> export function formatAmount(v?: number): string {</span></div>
+    <div class="line"><span class="dimmer">       13 </span><span class="del">-    if (!v) return '—'</span></div>
+    <div class="line"><span class="dimmer">       13 </span><span class="add">+    if (v == null) return '—'</span></div>
+    <div class="line"><span class="dimmer">       14   </span><span class="dim">  const abs = Math.abs(v)</span></div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Bash</span><span class="dim">(npx vitest run src/utils/format.test.ts)</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="ok">✓</span> <span class="dim">Tests  6 passed (6)</span></div>
+    <div class="line"> </div>
+    <div class="line">⏺ 搞定。6 个用例全绿,顺手修掉一个「0 被显示成 —」的真 bug。</div>
+    <div class="inputbox"><span class="caret"></span></div>
+    <div class="status"><span>? for shortcuts</span><span></span></div>
+  </div>
+</div>
+<div class="brand">MrCrabAI · Claude Code 指南</div>
+</body></html>

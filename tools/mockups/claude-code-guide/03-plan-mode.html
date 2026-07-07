@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="shot" content="1180x900"><link rel="stylesheet" href="../term.css"></head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+    <div class="title">mrcrab — claude · ai-money-map — 118×40</div>
+  </div>
+  <div class="term">
+    <div class="line user">&gt; 时间轴回放要从原型移植到正式站,先出个方案</div>
+    <div class="line"> </div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Read</span><span class="dim">(reference-prototype.html)</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="dim">Read 1,204 lines</span></div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Read</span><span class="dim">(src/main.ts)</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="dim">Read 86 lines</span></div>
+    <div class="line"><span class="tooldot">⏺</span> <span class="b">Search</span><span class="dim">(pattern: "timeline", glob: "src/**")</span></div>
+    <div class="line">  <span class="dimmer">⎿</span>  <span class="dim">Found 0 files</span></div>
+    <div class="line"> </div>
+    <div class="line">⏺ 原型里 Timeline 是一个约 180 行的自包含类(播放循环 + 刻度渲染 + 日期读出),正式站 src/ 下还没有对应模块。移植方案如下:</div>
+    <div class="box">
+      <div class="line b">Ready to code?</div>
+      <div class="line"> </div>
+      <div class="line dim">Here is Claude's plan:</div>
+      <div class="line">1. 新建 src/timeline/player.ts:移植播放循环与变速逻辑,去掉原型里的全局变量,改成事件回调</div>
+      <div class="line">2. 新建 src/timeline/scale.ts:刻度与日期读出,按交易的 announced 字段驱动</div>
+      <div class="line">3. main.ts 装配:时间轴订阅 → 图层按日期过滤重绘,保证演示模式构图不裁切</div>
+      <div class="line">4. npm run build,再按 1440×900 / 390×844 两档截图走查</div>
+    </div>
+    <div class="line dim">Would you like to proceed?</div>
+    <div class="line"> </div>
+    <div class="line sel"><span style="color:#C8C4BA">❯</span> 1. Yes, and auto-accept edits</div>
+    <div class="line dim">  2. Yes, and manually approve edits</div>
+    <div class="line dim">  3. No, keep planning</div>
+    <div class="status"><span>? for shortcuts</span><span class="plangreen">⏸ plan mode on (shift+tab to cycle)</span></div>
+  </div>
+</div>
+<div class="brand">MrCrabAI · Claude Code 指南</div>
+</body></html>

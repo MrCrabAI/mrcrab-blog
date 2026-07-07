@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Footer from '../../components/Footer.astro';
 import PostActions from '../../components/PostActions.tsx';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { tagLabel } from '../../data/tags';
 import { withBase } from '../../lib/url';
 import { fmtDateCN, fmtDateEN } from '../../lib/dates';
@@ -21,8 +21,13 @@ type Props = { post: CollectionEntry<'notes'>; next: CollectionEntry<'notes'> };
 const { post, next } = Astro.props;
 const { data } = post;
 
-const cnParas = data.bodyCn.split('\n\n').map((s) => s.trim()).filter(Boolean);
-const enParas = data.bodyEn.split('\n\n').map((s) => s.trim()).filter(Boolean);
+// Long-form articles render their markdown body via <Content />; short notes
+// split their frontmatter bodies into paragraphs.
+const isArticle = data.article === true;
+const { Content } = isArticle ? await render(post) : { Content: null };
+
+const cnParas = (data.bodyCn ?? '').split('\n\n').map((s) => s.trim()).filter(Boolean);
+const enParas = (data.bodyEn ?? '').split('\n\n').map((s) => s.trim()).filter(Boolean);
 // A custom closing pull-quote (frontmatter) wins; otherwise auto-pull the
 // first sentence as a mid-text quote (default behavior for the other posts).
 const autoPull = !data.pullQuoteCn && cnParas.length >= 2 ? cnParas[0].split('ã€‚')[0] + 'ã€‚' : null;
@@ -73,6 +78,11 @@ const autoPull = !data.pullQuoteCn && cnParas.length >= 2 ? cnParas[0].split('ã€
       )}
 
       <div class="post-article__body">
+        {isArticle ? (
+          <div class="lang-cn prose">
+            <Content />
+          </div>
+        ) : (
         <div class="lang-cn">
           {cnParas.map((p, i) => (
             <>
@@ -92,6 +102,7 @@ const autoPull = !data.pullQuoteCn && cnParas.length >= 2 ? cnParas[0].split('ã€
             <blockquote class="post-article__pullquote">{data.pullQuoteEn}</blockquote>
           )}
         </div>
+        )}
       </div>
 
       <PostActions client:idle />

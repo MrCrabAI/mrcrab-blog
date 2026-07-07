@@ -13,6 +13,7 @@ export const TAGS: Tag[] = [
   { id: 'walks', cn: '散步', en: 'Walks' },
   { id: 'craft', cn: '手艺', en: 'Craft' },
   { id: 'genesis', cn: '造物', en: 'Genesis' },
+  { id: 'guide', cn: '指南', en: 'Guides' },
 ];
 
 export function tagLabel(id: string): Tag {
