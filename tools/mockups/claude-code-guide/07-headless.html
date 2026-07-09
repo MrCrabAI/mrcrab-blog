@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="shot" content="1180x600"><link rel="stylesheet" href="../term.css"></head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+    <div class="title">mrcrab — zsh — 118×28</div>
+  </div>
+  <div class="term">
+    <div class="line"><span class="ok">~/Projects/ai-money-map</span> <span class="dim">$</span> claude -p <span class="dim">"检查 data/deals.us.json 有没有缺 source 的交易,只输出结论"</span></div>
+    <div class="line dim">28 笔交易全部带 source 字段,无缺失;其中 2 笔链接指向媒体首页而非报道原文,建议补精确 URL。</div>
+    <div class="line"> </div>
+    <div class="line"><span class="ok">~/Projects/ai-money-map</span> <span class="dim">$</span> git diff --staged | claude -p <span class="dim">"写一条 Conventional Commits 提交信息,中文,只输出这一行"</span></div>
+    <div class="line dim">data: 补齐 Oracle→Nvidia 回流腿来源 URL(Reuters 2025-09-10)</div>
+    <div class="line"> </div>
+    <div class="line"><span class="ok">~/Projects/ai-money-map</span> <span class="dim">$</span> claude -p --output-format json <span class="dim">"统计 deals.cn.json 六类交易的笔数"</span> | jq -r .result</div>
+    <div class="line dim">compute 9 笔 / equity 7 笔 / venture 6 笔 / state 4 笔 / ipo 2 笔 / partner 1 笔</div>
+    <div class="line"> </div>
+    <div class="line"><span class="ok">~/Projects/ai-money-map</span> <span class="dim">$</span> <span class="caret o" style="margin:0"></span></div>
+  </div>
+</div>
+<div class="brand">MrCrabAI · Claude Code 指南</div>
+</body></html>

@@ -27,7 +27,7 @@ const searchPosts = notes
     titleEn: n.data.titleEn,
     dekCn: n.data.dekCn,
     dekEn: n.data.dekEn,
-    body: `${n.data.bodyCn} ${n.data.bodyEn}`,
+    body: `${n.data.bodyCn ?? ''} ${n.data.bodyEn ?? ''}`,
     date: n.data.date.toISOString().slice(0, 10),
     readMin: n.data.readMin,
   }));
