@@ -63,17 +63,18 @@ repo is connected to Cloudflare via Git, so every push to `main` builds
 (`npm run build` → `dist`) and deploys automatically. The custom domain (apex +
 `www`) and DNS are managed in the Cloudflare account that owns the zone.
 
-Cloudflare Web Analytics is enabled for the zone with automatic injection, so the
-beacon script is added at the edge and appears in no source file and in no build
-output. Injection fails **silently** — no error, the data just stops — if the DNS
-record is set to DNS-only (the edge no longer sees the response) or if the HTML is
-served with `Cache-Control: no-transform` (which forbids the edge from rewriting
-the body). So if a `_headers` file is ever added, scope `no-transform` to static
-assets only (`/assets/*`), never to `/*`. Verify the beacon is live against the
-production response, not the source:
+Cloudflare Web Analytics runs via the beacon `<script>` in `Base.astro`, guarded
+to `import.meta.env.PROD` so it ships in `npm run build` output but not in
+`npm run dev` (local hits stay out of the data). The beacon token is public — it
+ships in the page — so it is hardcoded, not an env var. Edge auto-injection was
+tried first but never fired for this Pages project; the in-HTML beacon is
+deterministic and immune to it: it reports directly to `cloudflareinsights.com`,
+so it keeps working even if DNS is set to DNS-only or a `no-transform` header is
+added. Verify against the production response, or grep the build:
 
 ```bash
-curl -s https://mrcrabai.com | grep -c cloudflareinsights   # 0 = not injected
+curl -s https://mrcrabai.com | grep -c cloudflareinsights   # 0 = not deployed yet
+grep -rc cloudflareinsights dist/ | grep -v ':0'             # local build check
 ```
 
 The blog lives at the apex on purpose: the apex is the identity, and subdomains

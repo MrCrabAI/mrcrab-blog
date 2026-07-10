@@ -72,5 +72,18 @@ const searchPosts = notes
       );
       document.querySelectorAll('.fade-in').forEach((el) => io.observe(el));
     </script>
+
+    {
+      /* Cloudflare Web Analytics. Guarded to the production build so `npm run dev`
+         hits are never counted. Token is public (it ships in the page), not a secret. */
+      import.meta.env.PROD && (
+        <script
+          is:inline
+          type="module"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "30b03ac6bd774242996f2ad0f1636aa7"}'
+        ></script>
+      )
+    }
   </body>
 </html>
