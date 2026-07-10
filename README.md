@@ -63,6 +63,26 @@ repo is connected to Cloudflare via Git, so every push to `main` builds
 (`npm run build` → `dist`) and deploys automatically. The custom domain (apex +
 `www`) and DNS are managed in the Cloudflare account that owns the zone.
 
+Cloudflare Web Analytics is enabled for the zone with automatic injection, so the
+beacon script is added at the edge and appears in no source file and in no build
+output. Injection fails **silently** — no error, the data just stops — if the DNS
+record is set to DNS-only (the edge no longer sees the response) or if the HTML is
+served with `Cache-Control: no-transform` (which forbids the edge from rewriting
+the body). So if a `_headers` file is ever added, scope `no-transform` to static
+assets only (`/assets/*`), never to `/*`. Verify the beacon is live against the
+production response, not the source:
+
+```bash
+curl -s https://mrcrabai.com | grep -c cloudflareinsights   # 0 = not injected
+```
+
+The blog lives at the apex on purpose: the apex is the identity, and subdomains
+are for projects (`aimoneymap.mrcrabai.com`). The home page doubles as the
+personal landing page — `About` is an anchor on it, not a route. Moving the blog
+to `blog.` would demote the only thing the domain currently says, and would cost
+a permanent redirect table plus a fresh start on search authority, since Google
+treats a subdomain as a separate host.
+
 ## AI tooling
 
 `.mcp.json` registers the [Astro Docs MCP server](https://docs.astro.build/en/guides/build-with-ai/)
