@@ -1,0 +1,78 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="shot" content="1180x720"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+body{
+  background:#F0EEE6;
+  background-image:radial-gradient(1200px 800px at 20% -10%, #F8F6F0 0%, #F0EEE6 55%, #E6E3D7 100%);
+  display:flex;align-items:center;justify-content:center;position:relative;
+  font-family:"PingFang SC","Hiragino Sans GB",sans-serif;color:#1A1915;
+}
+.wrap{width:1060px}
+.head{text-align:center;margin-bottom:30px}
+.head h2{font-family:"Songti SC","Noto Serif SC",serif;font-weight:900;font-size:38px;letter-spacing:.02em}
+.head .sub{margin-top:12px;font-size:17px;color:#6E695E}
+.mono{font-family:"SF Mono",Menlo,monospace}
+.brand{position:absolute;right:34px;bottom:24px;font-family:Menlo,monospace;font-size:14px;color:#B9B3A2}
+.node rect{fill:#FFFFFF;stroke:#D8D2C4;stroke-width:1.5}
+.proj rect{fill:#1F1E1B;stroke:#1F1E1B}
+.proj text{fill:#F0EEE6}
+.wt rect{fill:#FBF3EE;stroke:#D97757;stroke-width:1.8}
+.t-title{font-weight:700}
+.t-sub{fill:#8A857A}
+.edge{stroke:#C7C1B2;stroke-width:1.8;fill:none}
+</style></head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h2>project → session → worktree：一对多</h2>
+      <div class="sub">一个项目开无数会话；要并行改代码时，每条会话再各占一个 worktree（独立分支+目录），互不踩踏</div>
+    </div>
+    <svg viewBox="0 0 1060 470" width="1060" height="470" xmlns="http://www.w3.org/2000/svg" class="mono" font-size="15">
+      <!-- edges: project -> sessions -->
+      <path class="edge" d="M250 235 C330 235 330 90 410 90"/>
+      <path class="edge" d="M250 235 C330 235 330 235 410 235"/>
+      <path class="edge" d="M250 235 C330 235 330 380 410 380"/>
+      <!-- edges: session -> worktree -->
+      <path class="edge" d="M650 90  C720 90 720 90 790 90"/>
+      <path class="edge" d="M650 235 C720 235 720 235 790 235"/>
+
+      <!-- project -->
+      <g class="node proj">
+        <rect x="40" y="200" width="210" height="70" rx="12"/>
+        <text x="66" y="232" class="t-title" font-size="17">1 个 项目 / 仓库</text>
+        <text x="66" y="255" font-size="13" fill="#B9B3A2">blog · 一份 .git</text>
+      </g>
+
+      <!-- sessions -->
+      <g class="node">
+        <rect x="410" y="58" width="240" height="64" rx="10"/>
+        <text x="432" y="88" class="t-title">session A</text>
+        <text x="432" y="110" class="t-sub" font-size="13">新功能 · /resume 随时续</text>
+      </g>
+      <g class="node">
+        <rect x="410" y="203" width="240" height="64" rx="10"/>
+        <text x="432" y="233" class="t-title">session B</text>
+        <text x="432" y="255" class="t-sub" font-size="13">改 bug · 与 A 同时跑</text>
+      </g>
+      <g class="node">
+        <rect x="410" y="348" width="240" height="64" rx="10"/>
+        <text x="432" y="378" class="t-title">session C</text>
+        <text x="432" y="400" class="t-sub" font-size="13">只读研究 · 用主工作区</text>
+      </g>
+
+      <!-- worktrees -->
+      <g class="node wt">
+        <rect x="790" y="58" width="230" height="64" rx="10"/>
+        <text x="812" y="88" class="t-title" fill="#B4552E">worktree A</text>
+        <text x="812" y="110" class="t-sub" font-size="13">分支 feat-x · 独立目录</text>
+      </g>
+      <g class="node wt">
+        <rect x="790" y="203" width="230" height="64" rx="10"/>
+        <text x="812" y="233" class="t-title" fill="#B4552E">worktree B</text>
+        <text x="812" y="255" class="t-sub" font-size="13">分支 fix-y · 独立目录</text>
+      </g>
+      <text x="905" y="392" text-anchor="middle" class="t-sub" font-size="14">（无 worktree，直接在主目录）</text>
+    </svg>
+  </div>
+  <div class="brand">MrCrabAI · 2026.07</div>
+</body></html>

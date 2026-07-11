@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="shot" content="1180x820"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+body{
+  background:#F0EEE6;
+  background-image:radial-gradient(1200px 800px at 20% -10%, #F8F6F0 0%, #F0EEE6 55%, #E6E3D7 100%);
+  display:flex;align-items:center;justify-content:center;position:relative;
+  font-family:"PingFang SC","Hiragino Sans GB",sans-serif;color:#1A1915;
+}
+.wrap{width:1060px}
+.head{text-align:center;margin-bottom:26px}
+.head h2{font-family:"Songti SC","Noto Serif SC",serif;font-weight:900;font-size:40px;letter-spacing:.02em}
+.head .sub{margin-top:12px;font-size:17px;color:#6E695E;letter-spacing:.02em}
+.arrow{display:inline-block;color:#D97757;font-weight:700;margin:0 6px}
+svg{display:block;margin:0 auto}
+.ring-label{font-family:"SF Mono",Menlo,monospace;font-weight:700}
+.cap{font-family:"PingFang SC",sans-serif}
+.brand{position:absolute;right:34px;bottom:24px;font-family:Menlo,monospace;font-size:14px;color:#B9B3A2}
+</style></head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h2>chat / cowork / code：先选对那扇门</h2>
+      <div class="sub">能力从小到大层层包含：chat <span class="arrow">⊂</span> cowork <span class="arrow">⊂</span> code</div>
+    </div>
+    <svg viewBox="0 0 1060 560" width="1060" height="560" xmlns="http://www.w3.org/2000/svg">
+      <!-- code: 最外层 -->
+      <circle cx="360" cy="290" r="252" fill="#D97757" fill-opacity="0.10" stroke="#D97757" stroke-width="2.5"/>
+      <!-- cowork: 中间层 -->
+      <circle cx="360" cy="330" r="168" fill="#D97757" fill-opacity="0.16" stroke="#C9683F" stroke-width="2.5"/>
+      <!-- chat: 最内层 -->
+      <circle cx="360" cy="372" r="86" fill="#1F1E1B" fill-opacity="0.9" stroke="#1F1E1B" stroke-width="2"/>
+
+      <text x="360" y="82" text-anchor="middle" class="ring-label" font-size="26" fill="#B4552E">code</text>
+      <text x="360" y="196" text-anchor="middle" class="ring-label" font-size="24" fill="#B4552E">cowork</text>
+      <text x="360" y="378" text-anchor="middle" class="ring-label" font-size="22" fill="#F0EEE6">chat</text>
+
+      <!-- 引线 + 说明 -->
+      <line x1="612" y1="70"  x2="700" y2="70"  stroke="#C7C1B2" stroke-width="1.5"/>
+      <line x1="528" y1="238" x2="700" y2="238" stroke="#C7C1B2" stroke-width="1.5"/>
+      <line x1="446" y1="372" x2="700" y2="372" stroke="#C7C1B2" stroke-width="1.5"/>
+
+      <text x="716" y="52"  class="ring-label" font-size="20" fill="#1A1915">code · 开发者的全能力</text>
+      <text x="716" y="80"  class="cap" font-size="16" fill="#6E695E">住进你的机器与仓库：读写任意文件、</text>
+      <text x="716" y="104" class="cap" font-size="16" fill="#6E695E">跑 shell、操作 git、接任意 MCP、无头自动化</text>
+
+      <text x="716" y="220" class="ring-label" font-size="20" fill="#1A1915">cowork · 不碰命令行的办公 agent</text>
+      <text x="716" y="248" class="cap" font-size="16" fill="#6E695E">连接 Slack / Gmail / 日历 / 云文档 / Excel，</text>
+      <text x="716" y="272" class="cap" font-size="16" fill="#6E695E">多步自动干完日常办公，无需终端</text>
+
+      <text x="716" y="356" class="ring-label" font-size="20" fill="#1A1915">chat · 一问一答</text>
+      <text x="716" y="384" class="cap" font-size="16" fill="#6E695E">读你给的内容、生成文字与代码，</text>
+      <text x="716" y="408" class="cap" font-size="16" fill="#6E695E">不主动碰你的环境</text>
+    </svg>
+  </div>
+  <div class="brand">MrCrabAI · 2026.07</div>
+</body></html>
