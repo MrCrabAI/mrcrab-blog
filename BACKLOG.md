@@ -5,24 +5,15 @@
 
 ---
 
-## 🔲 1. 迁移托管到 Cloudflare Pages
+## ✅ 1. 迁移托管到 Cloudflare Pages(已完成)
 
-**做什么**
-把当前部署从 Netlify 迁到 Cloudflare Pages(可先并存,再决定是否下线 Netlify)。
+已从 Netlify 完整迁到 **Cloudflare Pages**,Netlify 配置已下线(单套 CI)。
+站点在 [mrcrabai.com](https://mrcrabai.com)(apex + `www`,`www`→apex 301),
+每次 push `main` 自动 `npm run build` → `dist` 部署。构建与代码未改动,如预期零成本。
 
-**为什么**
-- 免费版**带宽 / 请求不限量**(Netlify 免费版 100GB/月,超额很贵)——给流量增长上保险。
-- CDN 节点更多(330+ 城市),亚洲访问更快。
-- 中国大陆访问比 Netlify 略好(但**两者都不是"快"**;真要快需 ICP 备案 + 国内 CDN)。
+顺带接入了 **Cloudflare Web Analytics**(in-HTML beacon,无 cookie / 隐私友好)攒流量基线。
 
-**成本**
-- 迁移工作量**极低**:构建不变(`npm run build` → `dist`),base 已是根路径,**不改代码**。
-- 在 Cloudflare 控制台连 GitHub repo 即可,流程与 Netlify 一致。
-
-**注意点 / 决策**
-- 这是"锦上添花 + 上保险",不是解决当前痛点;现状 Netlify 完全够用。
-- 若读者主要在大陆,换 Cloudflare 解决不了根本问题(需备案 + 国内 CDN)。
-- 迁完记得决定 Netlify 站是保留(冗余)还是下线(避免两套 CI 跑同一 repo)。
+> 复盘:大陆访问仍非"快",需 ICP 备案 + 国内 CDN 才能根本改善——暂不做。
 
 ---
 
