@@ -3,7 +3,7 @@ import { withBase } from '../lib/url';
 import CrabMark from './CrabMark.astro';
 
 interface Props {
-  active?: 'home' | 'about' | null;
+  active?: 'home' | 'notes' | 'about' | null;
 }
 const { active = null } = Astro.props;
 ---
@@ -16,9 +16,9 @@ const { active = null } = Astro.props;
       <span class="nav__brand-sub">· 笔记</span>
     </a>
     <div class="nav__links">
-      <a href={withBase('/')} class={active === 'home' ? 'is-active' : ''}>笔记 · Notes</a>
+      <a href={withBase('/notes/')} class={active === 'notes' ? 'is-active' : ''}>笔记 · Notes</a>
       <a href={withBase('/#about')} class={active === 'about' ? 'is-active' : ''}>关于 · About</a>
-      <a href="https://www.youtube.com" target="_blank" rel="noreferrer">视频 · Videos ↗</a>
+      <a href={withBase('/')}>所有链接 · Links ↗</a>
     </div>
     <div class="nav__right">
       <button class="nav__search" id="nav-search" type="button">

@@ -1,6 +1,6 @@
-# 蟹先生 · 笔记 / Mr. Crab — Notes
+# Mr. Crab — Links & Notes
 
-A bilingual (Chinese/English) personal blog, built with [Astro](https://astro.build).
+A personal link hub with a bilingual (Chinese/English) notes archive, built with [Astro](https://astro.build).
 Content is server-rendered to static HTML; React ships only as small islands for
 the search modal and post action rail.
 
@@ -8,7 +8,10 @@ the search modal and post action rail.
 
 | Path | Role |
 |---|---|
-| `src/pages/index.astro` | Home — editorial layout + tag filter |
+| `src/pages/index.astro` | Link hub — profile, YouTube, X, and sharing |
+| `src/data/links.ts` | Homepage link destinations and labels |
+| `src/styles/links.css` | Responsive cream, coral, and teal link hub styles |
+| `src/pages/notes/index.astro` | Notes archive — editorial layout + tag filter |
 | `src/pages/notes/[slug].astro` | One static page per note |
 | `src/layouts/Base.astro` | HTML shell, nav, no-flash theme init |
 | `src/components/Nav.astro` | Nav bar, search trigger, dark/light toggle |
@@ -89,12 +92,11 @@ curl -s https://mrcrabai.com | grep -c cloudflareinsights   # 0 = not deployed y
 grep -rc cloudflareinsights dist/ | grep -v ':0'             # local build check
 ```
 
-The blog lives at the apex on purpose: the apex is the identity, and subdomains
-are for projects (`aimoneymap.mrcrabai.com`). The home page doubles as the
-personal landing page — `About` is an anchor on it, not a route. Moving the blog
-to `blog.` would demote the only thing the domain currently says, and would cost
-a permanent redirect table plus a fresh start on search authority, since Google
-treats a subdomain as a separate host.
+The apex is the personal link hub. Edit `src/data/links.ts` to update its link
+buttons. The homepage features only YouTube and X as destination buttons. The previous blog homepage is retained at `/notes/`, and all
+existing `/notes/<slug>` article URLs and privacy pages remain available.
+The link hub uses its own lightweight styling and does not load the blog's
+React islands. Both layouts retain production Cloudflare Web Analytics.
 
 ## AI tooling
 
